@@ -99,14 +99,14 @@ def pred(sent):
 
             else:  ## relative day exist but date is in 7th may kind date (rare case)
 
-                departure_date = dateparser.parse(departure_date).strftime("%m/%d/%Y")
+                departure_date = dateparser.parse(departure_date,settings={'PREFER_DATES_FROM': 'future'}).strftime("%m/%d/%Y")
         else:  ## relative date is present and departure date is not mentioned then set ralative date to departure
 
             departure_date = relative_date.get(t_relative_date.lower(), t_relative_date)
 
     # ### change departure date in required format for all the posibilities
     if (departure_date):
-        departure_date = dateparser.parse(str(departure_date)).strftime("%m/%d/%Y")
+        departure_date = dateparser.parse(str(departure_date),settings={'PREFER_DATES_FROM': 'future'}).strftime("%m/%d/%Y")
 
     ### return date should always be after departure
     if (return_date):
@@ -118,13 +118,13 @@ def pred(sent):
 
         ## change return date in required format for all the posibilities
         print(return_date)
-        return_date = dateparser.parse(str(return_date)).strftime("%m/%d/%Y")
+        return_date = dateparser.parse(str(return_date),settings={'PREFER_DATES_FROM': 'future'}).strftime("%m/%d/%Y")
 
     ### change departure and return departure time in format
-    time = dateparser.parse(departure_time)
+    time = dateparser.parse(departure_time,settings={'PREFER_DATES_FROM': 'future'})
     if (time):
         departure_time = time.strftime("%H:%M:%S")
-    time = dateparser.parse(return_time)
+    time = dateparser.parse(return_time,settings={'PREFER_DATES_FROM': 'future'})
     if (time):
         return_time = time.strftime("%H:%M:%S")
 
